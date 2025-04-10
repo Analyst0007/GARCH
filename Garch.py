@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from arch import arch_model
-import math
 
 # Streamlit App Title
 st.title("📈 Stock Volatility & GARCH(1,1) Forecast App")
@@ -39,10 +38,10 @@ if st.button("Run Analysis"):
             ax.legend()
             st.pyplot(fig)
 
-            # Volatility Calculations
+            # Volatility Calculations using numpy instead of math
             daily_vol = data['Daily_Returns'].std()
-            monthly_vol = math.sqrt(21) * daily_vol
-            annual_vol = math.sqrt(252) * daily_vol
+            monthly_vol = np.sqrt(21) * daily_vol
+            annual_vol = np.sqrt(252) * daily_vol
 
             # Display Volatility
             st.subheader("📉 Volatility Summary")
@@ -62,7 +61,7 @@ if st.button("Run Analysis"):
             # Forecast Variance for Next 5 Days
             forecast = result.forecast(horizon=5)
             variance_forecast = forecast.variance.tail(1)
-            variance_forecast = variance_forecast.values.reshape(-1, 5)  # reshape to 1 row with 5 columns
+            variance_forecast = variance_forecast.values.reshape(-1, 5)
             variance_df = pd.DataFrame(variance_forecast, columns=[f"Day {i+1}" for i in range(5)])
             st.subheader("📊 5-Day Ahead Variance Forecast")
             st.dataframe(variance_df)
