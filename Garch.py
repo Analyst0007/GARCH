@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from arch import arch_model
+import math
 
 # Streamlit App Title
 st.title("📈 Stock Volatility & GARCH(1,1) Forecast App")
